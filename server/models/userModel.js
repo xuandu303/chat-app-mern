@@ -4,8 +4,8 @@ import bcrypt from "bcrypt";
 const userSchema = new mongoose.Schema({
   email: { type: String, required: [true, "Email is required"], unique: true },
   password: { type: String, required: [true, "Password is required"] },
-  firstName: { type: String, required: function () { return this.profileSetup === true; } },
-  lastName: { type: String, required: function () { return this.profileSetup === true; } },
+  firstName: { type: String, default: "" },
+  lastName: { type: String, default: "" },
   image: { type: String, required: false },
   imagePublicId: { type: String, required: false },
   color: { type: Number, required: false },

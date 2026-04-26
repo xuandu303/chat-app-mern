@@ -24,7 +24,7 @@ export const signup = async (req, res) => {
         .status(400)
         .json({ message: "Password must be at least 6 characters" });
     }
-    const user = await User.create({ email, password, firstName: "", lastName: "" });
+    const user = await User.create({ email, password });
     res.cookie("jwt", createToken(user.email, user.id), {
       httpOnly: true,
       maxAge,
@@ -182,9 +182,7 @@ export const removeProfileImage = async (req, res) => {
       await cloudinary.uploader.destroy(user.imagePublicId);
     }
 
-    user.image = null;
-    user.imagePublicId = null;
-    await user.save();
+    await User.findByIdAndUpdate(userId, { image: null, imagePublicId: null });
 
     return res
       .status(200)
