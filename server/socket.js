@@ -1,4 +1,5 @@
 import { Server as SocketIOServer } from "socket.io";
+import { verifySocketToken } from "./middlewares/authMiddleware.js";
 import Message from "./models/messageModel.js";
 import Channel from "./models/channelModel.js";
 
@@ -10,6 +11,8 @@ const setupSocket = (server) => {
       credentials: true,
     },
   });
+
+  io.use(verifySocketToken);
 
   const userSocketMap = new Map();
 
@@ -82,14 +85,9 @@ const setupSocket = (server) => {
   };
 
   io.on("connection", (socket) => {
-    const userId = socket.handshake.query.userId;
-
-    if (userId) {
-      userSocketMap.set(userId, socket.id);
-      console.log(`User connected: ${userId} with socket ID: ${socket.id}`);
-    } else {
-      console.log("User ID not provided during connection.");
-    }
+    const userId = socket.userId;
+    userSocketMap.set(userId, socket.id);
+    console.log(`User connected: ${userId} with socket ID: ${socket.id}`);
 
     socket.on("sendMessage", sendMessage);
     socket.on("sendChannelMessage", sendChannelMessage);
