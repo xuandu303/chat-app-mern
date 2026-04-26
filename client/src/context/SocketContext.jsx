@@ -28,6 +28,11 @@ export const SocketProvider = ({ children }) => {
       console.log("Connected to socket server");
     });
 
+    const handleOnlineUsers = (users) => {
+      const { setOnlineUsers } = useAppStore.getState();
+      setOnlineUsers(users);
+    };
+
     const handleReceiveMessage = (message) => {
       const {
         selectedChatData,
@@ -63,6 +68,7 @@ export const SocketProvider = ({ children }) => {
       addChannelInChannelList(message);
     };
 
+    socketRef.current.on("onlineUsers", handleOnlineUsers);
     socketRef.current.on("receiveMessage", handleReceiveMessage);
     socketRef.current.on("receiveChannelMessage", handleReceiveChannelMessage);
 

@@ -10,6 +10,7 @@ const ContactList = ({ contacts, isChannel = false }) => {
     setSelectedChatType,
     setSelectedChatMessages,
     userInfo,
+    onlineUsers,
   } = useAppStore();
 
   const handleClick = (contact) => {
@@ -31,23 +32,28 @@ const ContactList = ({ contacts, isChannel = false }) => {
         >
           <div className="flex gap-2 items-center justify-start text-neutral-300">
             {!isChannel && (
-              <Avatar className="w-11.5 h-11.5 rounded-full overflow-hidden">
-                {contact.image ? (
-                  <AvatarImage
-                    src={resolveUrl(contact.image)}
-                    alt="profile"
-                    className="object-cover rounded-full w-full h-full bg-black"
-                  />
-                ) : (
-                  <div
-                    className={`${getColor(contact.color)} uppercase h-11.5 w-11.5 text-lg border-1px flex items-center justify-center rounded-full`}
-                  >
-                    {contact.firstName
-                      ? contact.firstName.split("").shift()
-                      : contact.email.split("").shift()}
-                  </div>
+              <div className="relative flex-shrink-0">
+                <Avatar className="w-11.5 h-11.5 rounded-full overflow-hidden">
+                  {contact.image ? (
+                    <AvatarImage
+                      src={resolveUrl(contact.image)}
+                      alt="profile"
+                      className="object-cover rounded-full w-full h-full bg-black"
+                    />
+                  ) : (
+                    <div
+                      className={`${getColor(contact.color)} uppercase h-11.5 w-11.5 text-lg border-1px flex items-center justify-center rounded-full`}
+                    >
+                      {contact.firstName
+                        ? contact.firstName.split("").shift()
+                        : contact.email.split("").shift()}
+                    </div>
+                  )}
+                </Avatar>
+                {onlineUsers.includes(contact._id) && (
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#1b1c24]" />
                 )}
-              </Avatar>
+              </div>
             )}
             {isChannel && (
               <div className="bg-[#ffffff22] h-10 w-10 flex items-center justify-center rounded-full">

@@ -89,10 +89,15 @@ const setupSocket = (server) => {
     userSocketMap.set(userId, socket.id);
     console.log(`User connected: ${userId} with socket ID: ${socket.id}`);
 
+    io.emit("onlineUsers", Array.from(userSocketMap.keys()));
+
     socket.on("sendMessage", sendMessage);
     socket.on("sendChannelMessage", sendChannelMessage);
 
-    socket.on("disconnect", () => disconnect(socket));
+    socket.on("disconnect", () => {
+      disconnect(socket);
+      io.emit("onlineUsers", Array.from(userSocketMap.keys()));
+    });
   });
 };
 

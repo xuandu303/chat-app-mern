@@ -4,6 +4,9 @@ export const createChatSlice = (set, get) => ({
   selectedChatMessages: [],
   directMessagesContacts: [],
   channels: [],
+  onlineUsers: [],
+
+  setOnlineUsers: (onlineUsers) => set({ onlineUsers }),
 
   setChannels: (channels) => set({ channels }),
 
