@@ -130,7 +130,7 @@ export const getChannelMessages = async (req, res) => {
     });
 
     if (!channel) {
-      return response.status(404).send("Channel not found");
+      return res.status(404).json({ message: "Channel not found" });
     }
 
     const messages = channel.messages;
