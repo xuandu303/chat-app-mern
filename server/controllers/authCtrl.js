@@ -20,7 +20,7 @@ export const signup = async (req, res) => {
         .status(400)
         .json({ message: "Email and password are required" });
     }
-    const user = await User.create({ email, password });
+    const user = await User.create({ email, password, firstName: "", lastName: "" });
     res.cookie("jwt", createToken(user.email, user.id), {
       httpOnly: true,
       maxAge,
