@@ -20,6 +20,11 @@ export const signup = async (req, res) => {
         .status(400)
         .json({ message: "Email and password are required" });
     }
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
+    }
     const user = await User.create({ email, password, firstName: "", lastName: "" });
     res.cookie("jwt", createToken(user.email, user.id), {
       httpOnly: true,
@@ -35,6 +40,9 @@ export const signup = async (req, res) => {
       },
     });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({ message: "Email is already in use" });
+    }
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }

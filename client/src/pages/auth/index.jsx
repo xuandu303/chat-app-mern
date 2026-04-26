@@ -37,6 +37,10 @@ const Auth = () => {
       toast.error("Password is required");
       return false;
     }
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return false;
+    }
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return false;
@@ -62,7 +66,8 @@ const Auth = () => {
         }
       }
     } catch (error) {
-      console.error(error);
+      const message = error.response?.data?.message || "Login failed. Please try again.";
+      toast.error(message);
     }
   };
 
@@ -78,12 +83,13 @@ const Auth = () => {
           { withCredentials: true },
         );
         if (response.status === 201) {
+          setUserInfo(response.data.user);
           navigate("/profile");
         }
-        console.log(response);
       }
     } catch (error) {
-      console.error(error);
+      const message = error.response?.data?.message || "Signup failed. Please try again.";
+      toast.error(message);
     }
   };
 
