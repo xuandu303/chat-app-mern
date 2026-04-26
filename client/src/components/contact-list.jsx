@@ -11,12 +11,15 @@ const ContactList = ({ contacts, isChannel = false }) => {
     setSelectedChatMessages,
     userInfo,
     onlineUsers,
+    unreadContacts,
+    markAsRead,
   } = useAppStore();
 
   const handleClick = (contact) => {
     if (isChannel) setSelectedChatType("channel");
     else setSelectedChatType("contact");
     setSelectedChatData(contact);
+    markAsRead(contact._id);
     if (selectedChatData && selectedChatData._id !== contact._id) {
       setSelectedChatMessages([]);
     }
@@ -32,7 +35,7 @@ const ContactList = ({ contacts, isChannel = false }) => {
         >
           <div className="flex gap-2 items-center justify-start text-neutral-300">
             {!isChannel && (
-              <div className="relative flex-shrink-0">
+              <div className="relative shrink-0">
                 <Avatar className="w-11.5 h-11.5 rounded-full overflow-hidden">
                   {contact.image ? (
                     <AvatarImage
@@ -61,12 +64,12 @@ const ContactList = ({ contacts, isChannel = false }) => {
               </div>
             )}
             <div className="flex flex-col items-start justify-center gap-0">
-              <span className="font-semibold">
+              <span className={`font-semibold ${unreadContacts.includes(contact._id) ? "text-white font-semibold" : ""}`}>
                 {isChannel
                   ? `${contact.name}`
                   : `${contact.firstName} ${contact.lastName}`}
               </span>
-              <div className="flex items-center justify-start gap-0.5 text-sm text-white/40 ">
+              <div className={`flex items-center justify-start gap-0.5 text-sm ${unreadContacts.includes(contact._id) ? "text-white font-semibold" : "text-white/40"}`}>
                 <span className="truncate max-w-40">
                   {!isChannel &&
                     contact.lastMessageSenderId &&
@@ -89,7 +92,7 @@ const ContactList = ({ contacts, isChannel = false }) => {
                         : `${contact.lastMessageSender.firstName} sent an attachment`)}
                 </span>
                 <span>·</span>
-                <span className="">
+                <span>
                   {formatLastMessageTime(contact.lastMessageTime)}
                 </span>
               </div>

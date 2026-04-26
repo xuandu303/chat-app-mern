@@ -5,8 +5,21 @@ export const createChatSlice = (set, get) => ({
   directMessagesContacts: [],
   channels: [],
   onlineUsers: [],
+  unreadContacts: [],
 
   setOnlineUsers: (onlineUsers) => set({ onlineUsers }),
+
+  markAsUnread: (id) => {
+    const { unreadContacts } = get();
+    if (!unreadContacts.includes(id)) {
+      set({ unreadContacts: [...unreadContacts, id] });
+    }
+  },
+
+  markAsRead: (id) => {
+    const { unreadContacts } = get();
+    set({ unreadContacts: unreadContacts.filter((cid) => cid !== id) });
+  },
 
   setChannels: (channels) => set({ channels }),
 
