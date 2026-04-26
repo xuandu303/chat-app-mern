@@ -1,8 +1,7 @@
 import { useAppStore } from "@/store";
 import React from "react";
 import { Avatar, AvatarImage } from "./ui/avatar";
-import { HOST } from "@/utils/constants";
-import { getColor, formatLastMessageTime } from "@/lib/utils";
+import { getColor, formatLastMessageTime, resolveUrl } from "@/lib/utils";
 
 const ContactList = ({ contacts, isChannel = false }) => {
   const {
@@ -35,7 +34,7 @@ const ContactList = ({ contacts, isChannel = false }) => {
               <Avatar className="w-11.5 h-11.5 rounded-full overflow-hidden">
                 {contact.image ? (
                   <AvatarImage
-                    src={`${HOST}/${contact.image}`}
+                    src={resolveUrl(contact.image)}
                     alt="profile"
                     className="object-cover rounded-full w-full h-full bg-black"
                   />

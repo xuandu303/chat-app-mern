@@ -30,13 +30,10 @@ export const uploadFile = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
-    if (!req.originalName) {
-      return res.status(400).json({ message: "File name is required" });
-    }
 
     return res.status(200).json({
       filePath: req.file.path,
-      fileName: req.originalName,
+      fileName: req.file.originalname,
       fileSize: req.file.size,
     });
   } catch (error) {

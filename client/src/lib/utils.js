@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import animationData from "@/assets/lottie-json";
 import moment from "moment";
+import { HOST } from "@/utils/constants";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -55,6 +56,12 @@ export const formatLastMessageTime = (time) => {
  * @param {number} bytes
  * @returns {string}
  */
+
+export const resolveUrl = (url) => {
+  if (!url) return null;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `${HOST}/${url}`;
+};
 
 export function formatFileSize(bytes) {
   if (bytes === 0) return "0 B";

@@ -1,8 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useAppStore } from "@/store";
 import { IoClose } from "react-icons/io5";
-import { HOST } from "@/utils/constants";
-import { getColor } from "@/lib/utils";
+import { getColor, resolveUrl } from "@/lib/utils";
 
 const ChatHeader = () => {
   const { closeChat, selectedChatData, selectedChatType } = useAppStore();
@@ -15,7 +14,7 @@ const ChatHeader = () => {
               <Avatar className="w-10 h-10 rounded-full overflow-hidden">
                 {selectedChatData.image ? (
                   <AvatarImage
-                    src={`${HOST}/${selectedChatData.image}`}
+                    src={resolveUrl(selectedChatData.image)}
                     alt="profile"
                     className="object-cover rounded-full w-full h-full bg-black"
                   />

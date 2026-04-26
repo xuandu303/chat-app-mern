@@ -1,7 +1,7 @@
 import { useAppStore } from "@/store";
-import { getColor } from "@/lib/utils";
+import { getColor, resolveUrl } from "@/lib/utils";
 import React from "react";
-import { HOST, LOGOUT_ROUTE } from "@/utils/constants";
+import { LOGOUT_ROUTE } from "@/utils/constants";
 import {
   Tooltip,
   TooltipContent,
@@ -39,7 +39,7 @@ const ProfileInfo = () => {
           <Avatar className="w-12 h-12 rounded-full overflow-hidden">
             {userInfo.image ? (
               <AvatarImage
-                src={`${HOST}/${userInfo.image}`}
+                src={resolveUrl(userInfo.image)}
                 alt="profile"
                 className="object-cover rounded-full w-full h-full bg-black"
               />

@@ -1,8 +1,7 @@
 import { compare } from "bcrypt";
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
-import { renameSync, unlinkSync, existsSync } from "fs";
-import path from "path";
+import cloudinary from "../utils/cloudinary.js";
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
@@ -149,11 +148,15 @@ export const addProfileImage = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ message: "No image file uploaded." });
     }
-    const filePath = `uploads/profiles/${req.file.filename}`;
+
+    const user = await User.findById(req.userId);
+    if (user?.imagePublicId) {
+      await cloudinary.uploader.destroy(user.imagePublicId);
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.userId,
-      { image: filePath },
+      { image: req.file.path, imagePublicId: req.file.filename },
       { new: true, runValidators: true },
     );
 
@@ -175,15 +178,12 @@ export const removeProfileImage = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.image) {
-      const imagePath = path.resolve(user.image);
-
-      if (existsSync(imagePath)) {
-        unlinkSync(imagePath);
-      }
+    if (user.imagePublicId) {
+      await cloudinary.uploader.destroy(user.imagePublicId);
     }
 
     user.image = null;
+    user.imagePublicId = null;
     await user.save();
 
     return res

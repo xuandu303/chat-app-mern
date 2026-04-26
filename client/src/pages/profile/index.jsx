@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { colors, getColor } from "@/lib/utils";
+import { colors, getColor, resolveUrl } from "@/lib/utils";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,6 @@ import {
   REMOVE_PROFILE_IMAGE_ROUTE,
   UPDATE_PROFILE_ROUTE,
 } from "@/utils/constants";
-import { HOST } from "@/utils/constants";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ const Profile = () => {
   const [firstName, setFirstName] = useState(userInfo?.firstName ?? "");
   const [lastName, setLastName] = useState(userInfo?.lastName ?? "");
   const [image, setImage] = useState(
-    userInfo?.image ? `${HOST}/${userInfo.image}` : null
+    userInfo?.image ? resolveUrl(userInfo.image) : null
   );
   const [hovered, setHovered] = useState(false);
   const [selectedColor, setSelectedColor] = useState(userInfo?.color ?? 0);

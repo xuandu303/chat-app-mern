@@ -6,9 +6,8 @@ import {
 } from "@/utils/constants";
 import moment from "moment";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { HOST } from "@/utils/constants";
 import { HiDocumentText } from "react-icons/hi2";
-import { formatFileSize, formatLastMessageTime } from "@/lib/utils";
+import { formatFileSize, formatLastMessageTime, resolveUrl } from "@/lib/utils";
 import { IoMdArrowRoundDown } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import {
@@ -124,10 +123,10 @@ const MessageContainer = () => {
   };
 
   const downloadFile = async (url, name) => {
-    const response = await apiClient.get(`${HOST}/${url}`, {
-      responseType: "blob",
-    });
-    const urlBlob = window.URL.createObjectURL(new Blob([response.data]));
+    const fullUrl = resolveUrl(url);
+    const response = await fetch(fullUrl);
+    const blob = await response.blob();
+    const urlBlob = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = urlBlob;
     link.download = name;
@@ -179,7 +178,7 @@ const MessageContainer = () => {
                 >
                   <img
                     className="object-cover rounded-[18px]"
-                    src={`${HOST}/${message.file.url}`}
+                    src={resolveUrl(message.file.url)}
                     height={300}
                     width={300}
                   />
@@ -241,7 +240,7 @@ const MessageContainer = () => {
                   <Avatar className="w-8 h-8 rounded-full overflow-hidden">
                     {message.sender.image && (
                       <AvatarImage
-                        src={`${HOST}/${message.sender.image}`}
+                        src={resolveUrl(message.sender.image)}
                         alt="profile"
                         className="object-cover rounded-full w-full h-full bg-black"
                       />
@@ -299,7 +298,7 @@ const MessageContainer = () => {
                       >
                         <img
                           className="object-cover rounded-[18px]"
-                          src={`${HOST}/${message.file.url}`}
+                          src={resolveUrl(message.file.url)}
                           height={300}
                           width={300}
                         />
@@ -358,7 +357,7 @@ const MessageContainer = () => {
       {showImage && (
         <div className="fixed inset-0 z-1000 flex items-start justify-center overflow-hidden">
           <img
-            src={`${HOST}/${image.url}`}
+            src={resolveUrl(image.url)}
             className="absolute inset-0 h-full w-full object-cover scale-110 blur-xl"
             alt=""
             onLoad={() => {
@@ -370,7 +369,7 @@ const MessageContainer = () => {
           <div className="absolute inset-0 bg-black/60" />
 
           <img
-            src={`${HOST}/${image.url}`}
+            src={resolveUrl(image.url)}
             className="relative z-10 top-3 max-h-[90vh] max-w-[90vw] object-contain shadow-2xl"
             alt=""
           />
