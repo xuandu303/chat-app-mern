@@ -126,12 +126,15 @@ const MultipleSelector = React.forwardRef(
       if (JSON.stringify(newOption) !== JSON.stringify(options)) {
         setOptions(newOption);
       }
-    }, [arrayDefaultOptions, arrayOptions, groupBy, onSearch, options]);
+    }, [arrayOptions, groupBy, onSearch, options]);
 
     useEffect(() => {
+      let isMounted = true;
+
       const doSearch = async () => {
         setIsLoading(true);
         const res = await onSearch?.(debouncedSearchTerm);
+        if (!isMounted) return;
         setOptions(transToGroupOption(res || [], groupBy));
         setIsLoading(false);
       };
@@ -149,6 +152,9 @@ const MultipleSelector = React.forwardRef(
       };
 
       void exec();
+      return () => {
+        isMounted = false;
+      };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus]);
 
@@ -225,7 +231,7 @@ const MultipleSelector = React.forwardRef(
 
       if (creatable) {
         return (value, search) => {
-          return value.toLowerCase().includes(search.toLowerCase()) ? 1 : -1;
+          return value.toLowerCase().includes(search.toLowerCase()) ? 1 : 0;
         };
       }
       // Using default filter in `cmdk`. We don't have to provide it.
@@ -385,7 +391,7 @@ const MultipleSelector = React.forwardRef(
                           return (
                             <CommandItem
                               key={option.value}
-                              value={option.value}
+                              value={`${option.label} ${option.value}`}
                               disabled={option.disable}
                               onMouseDown={(e) => {
                                 e.preventDefault();
