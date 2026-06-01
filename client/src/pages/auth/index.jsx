@@ -57,7 +57,7 @@ const Auth = () => {
             email,
             password,
           },
-          { withCredentials: true },
+          { withCredentials: true }
         );
         if (response.data.user.id) {
           setUserInfo(response.data.user);
@@ -80,7 +80,7 @@ const Auth = () => {
             email,
             password,
           },
-          { withCredentials: true },
+          { withCredentials: true }
         );
         if (response.status === 201) {
           setUserInfo(response.data.user);
@@ -145,10 +145,7 @@ const Auth = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
 
-                  <Button
-                    type="submit"
-                    className="rounded-full p-6 cursor-pointer"
-                  >
+                  <Button type="submit" className="rounded-full p-6 cursor-pointer">
                     Login
                   </Button>
                 </form>
@@ -183,10 +180,7 @@ const Auth = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
 
-                  <Button
-                    type="submit"
-                    className="rounded-full p-6 cursor-pointer"
-                  >
+                  <Button type="submit" className="rounded-full p-6 cursor-pointer">
                     Signup
                   </Button>
                 </form>

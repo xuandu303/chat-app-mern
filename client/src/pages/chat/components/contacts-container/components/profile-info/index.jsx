@@ -2,12 +2,7 @@ import { useAppStore } from "@/store";
 import { getColor, resolveUrl } from "@/lib/utils";
 import React from "react";
 import { LOGOUT_ROUTE } from "@/utils/constants";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { TbLogout } from "react-icons/tb";
@@ -19,11 +14,7 @@ const ProfileInfo = () => {
   const navigate = useNavigate();
   const logOut = async () => {
     try {
-      const response = await apiClient.post(
-        LOGOUT_ROUTE,
-        {},
-        { withCredentials: true }
-      );
+      const response = await apiClient.post(LOGOUT_ROUTE, {}, { withCredentials: true });
       if (response.status === 200) {
         navigate("auth");
         setUserInfo(null);

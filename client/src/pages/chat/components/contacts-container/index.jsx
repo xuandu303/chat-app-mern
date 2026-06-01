@@ -1,22 +1,15 @@
 import React, { useEffect } from "react";
 import ProfileInfo from "./components/profile-info";
 import NewDM from "./components/new-dm";
-import {
-  GET_DM_CONTACTS_ROUTES,
-  GET_USER_CHANNELS_ROUTE,
-} from "@/utils/constants";
+import { GET_DM_CONTACTS_ROUTES, GET_USER_CHANNELS_ROUTE } from "@/utils/constants";
 import apiClient from "@/lib/api-client";
 import { useAppStore } from "@/store";
 import ContactList from "@/components/contact-list";
 import CreateChannel from "./components/create-channel";
 
 const ContactsContainer = () => {
-  const {
-    setDirectMessagesContacts,
-    directMessagesContacts,
-    channels,
-    setChannels,
-  } = useAppStore();
+  const { setDirectMessagesContacts, directMessagesContacts, channels, setChannels } =
+    useAppStore();
 
   useEffect(() => {
     const getContacts = async () => {
@@ -41,7 +34,7 @@ const ContactsContainer = () => {
 
     getContacts();
     getChannels();
-  }, []);
+  }, [setDirectMessagesContacts, setChannels]);
 
   return (
     <div className="relative sm:w-[35vw] lg:w-[26vw] xl:w-[22vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full">
@@ -89,21 +82,9 @@ const Logo = () => {
         xmlns="http://www.w3.org/2000/svg"
       >
         {" "}
-        <path
-          d="M55.5 0H77.5L58.5 32H36.5L55.5 0Z"
-          className="ccustom"
-          fill="#8338ec"
-        ></path>{" "}
-        <path
-          d="M35.5 0H51.5L32.5 32H16.5L35.5 0Z"
-          className="ccompli1"
-          fill="#975aed"
-        ></path>{" "}
-        <path
-          d="M19.5 0H31.5L12.5 32H0.5L19.5 0Z"
-          className="ccompli2"
-          fill="#a16ee8"
-        ></path>{" "}
+        <path d="M55.5 0H77.5L58.5 32H36.5L55.5 0Z" className="ccustom" fill="#8338ec"></path>{" "}
+        <path d="M35.5 0H51.5L32.5 32H16.5L35.5 0Z" className="ccompli1" fill="#975aed"></path>{" "}
+        <path d="M19.5 0H31.5L12.5 32H0.5L19.5 0Z" className="ccompli2" fill="#a16ee8"></path>{" "}
       </svg>
       <span className="text-2xl font-bold ">ChatApp</span>
     </div>

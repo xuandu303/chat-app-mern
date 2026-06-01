@@ -1,20 +1,13 @@
 import apiClient from "@/lib/api-client";
 import { useAppStore } from "@/store";
-import {
-  GET_ALL_MESSAGES_ROUTES,
-  GET_CHANNEL_MESSAGES,
-} from "@/utils/constants";
+import { GET_ALL_MESSAGES_ROUTES, GET_CHANNEL_MESSAGES } from "@/utils/constants";
 import moment from "moment";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { HiDocumentText } from "react-icons/hi2";
 import { formatFileSize, formatLastMessageTime, resolveUrl } from "@/lib/utils";
 import { IoMdArrowRoundDown } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { getColor } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -36,7 +29,7 @@ const MessageContainer = () => {
         const response = await apiClient.post(
           GET_ALL_MESSAGES_ROUTES,
           { id: selectedChatData._id },
-          { withCredentials: true },
+          { withCredentials: true }
         );
         if (response.data.messages) {
           setSelectedChatMessages(response.data.messages);
@@ -48,10 +41,9 @@ const MessageContainer = () => {
 
     const getChannelMessages = async () => {
       try {
-        const response = await apiClient.get(
-          `${GET_CHANNEL_MESSAGES}/${selectedChatData._id}`,
-          { withCredentials: true },
-        );
+        const response = await apiClient.get(`${GET_CHANNEL_MESSAGES}/${selectedChatData._id}`, {
+          withCredentials: true,
+        });
         if (response.data.messages) {
           setSelectedChatMessages(response.data.messages);
         }
@@ -82,8 +74,10 @@ const MessageContainer = () => {
   }, [selectedChatMessages.length]);
 
   const checkIfImage = (filePath) => {
-    const imageRegex =
-      /\.(jpeg|jpg|gif|png|bmp|tiff|tif|svg|webp|ico|heic|heif)$/i;
+    if (!filePath) return false;
+    // Cloudinary image URLs contain /image/upload/ in the path
+    if (filePath.includes("/image/upload/")) return true;
+    const imageRegex = /\.(jpeg|jpg|gif|png|bmp|tiff|tif|svg|webp|ico|heic|heif)(\?.*)?$/i;
     return imageRegex.test(filePath);
   };
 
@@ -98,13 +92,11 @@ const MessageContainer = () => {
       if (selectedChatType === "channel") {
         const nextMessage = selectedChatMessages[idx + 1];
 
-        showAvatar =
-          !nextMessage || nextMessage.sender._id !== message.sender._id;
+        showAvatar = !nextMessage || nextMessage.sender._id !== message.sender._id;
 
         const prevMessage = selectedChatMessages[idx - 1];
 
-        showName =
-          !prevMessage || prevMessage.sender._id !== message.sender._id;
+        showName = !prevMessage || prevMessage.sender._id !== message.sender._id;
       }
 
       return (
@@ -138,9 +130,7 @@ const MessageContainer = () => {
 
   const renderDMMessages = (message, idx) => (
     <div
-      className={`${
-        message.sender === selectedChatData._id ? "text-left" : "text-right"
-      } mt-1.75`}
+      className={`${message.sender === selectedChatData._id ? "text-left" : "text-right"} mt-1.75`}
     >
       <HoverCard>
         <HoverCardTrigger className="h-auto w-auto inline-block">
@@ -187,9 +177,7 @@ const MessageContainer = () => {
               ) : (
                 <div
                   className="flex items-center justify-center gap-2.5 cursor-pointer p-2.5 px-3"
-                  onClick={() =>
-                    downloadFile(message.file.url, message.file.name)
-                  }
+                  onClick={() => downloadFile(message.file.url, message.file.name)}
                 >
                   <span className="text-white text-[17px] bg-black/20 rounded-full p-2">
                     <HiDocumentText />
@@ -247,7 +235,7 @@ const MessageContainer = () => {
                     )}
                     <AvatarFallback
                       className={`uppercase h-8 w-8 text-lg flex items-center justify-center rounded-full ${getColor(
-                        message.sender.color,
+                        message.sender.color
                       )}`}
                     >
                       {message.sender.firstName
@@ -307,9 +295,7 @@ const MessageContainer = () => {
                     ) : (
                       <div
                         className="flex items-center justify-center gap-2.5 cursor-pointer p-2.5 px-3"
-                        onClick={() =>
-                          downloadFile(message.file.url, message.file.name)
-                        }
+                        onClick={() => downloadFile(message.file.url, message.file.name)}
                       >
                         <span className="text-white text-[17px] bg-black/20 rounded-full p-2">
                           <HiDocumentText />
@@ -349,10 +335,7 @@ const MessageContainer = () => {
   );
 
   return (
-    <div
-      ref={containerRef}
-      className="flex-1 overflow-y-auto custom-scrollbar px-8 w-full"
-    >
+    <div ref={containerRef} className="flex-1 overflow-y-auto custom-scrollbar px-8 w-full">
       {renderMessages()}
       {showImage && (
         <div className="fixed inset-0 z-1000 flex items-start justify-center overflow-hidden">

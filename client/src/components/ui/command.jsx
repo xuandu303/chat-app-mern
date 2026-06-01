@@ -1,22 +1,19 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Command as CommandPrimitive } from "cmdk"
-import { SearchIcon } from "lucide-react"
+import * as React from "react";
+import { Command as CommandPrimitive } from "cmdk";
+import { SearchIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
-function Command({
-  className,
-  ...props
-}) {
+function Command({ className, ...props }) {
   return (
     <CommandPrimitive
       data-slot="command"
@@ -24,7 +21,8 @@ function Command({
         "tw-:bg-popover tw-:text-popover-foreground tw-:flex tw-:h-full tw-:w-full tw-:flex-col tw-:overflow-hidden tw-:rounded-md",
         className
       )}
-      {...props} />
+      {...props}
+    />
   );
 }
 
@@ -44,9 +42,9 @@ function CommandDialog({
       </DialogHeader>
       <DialogContent
         className={cn("tw-:overflow-hidden tw-:p-0", className)}
-        showCloseButton={showCloseButton}>
-        <Command
-          className="tw-:[&_[cmdk-group-heading]]:text-muted-foreground tw-:**:data-[slot=command-input-wrapper]:h-12 tw-:[&_[cmdk-group-heading]]:px-2 tw-:[&_[cmdk-group-heading]]:font-medium tw-:[&_[cmdk-group]]:px-2 tw-:[&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 tw-:[&_[cmdk-input-wrapper]_svg]:h-5 tw-:[&_[cmdk-input-wrapper]_svg]:w-5 tw-:[&_[cmdk-input]]:h-12 tw-:[&_[cmdk-item]]:px-2 tw-:[&_[cmdk-item]]:py-3 tw-:[&_[cmdk-item]_svg]:h-5 tw-:[&_[cmdk-item]_svg]:w-5">
+        showCloseButton={showCloseButton}
+      >
+        <Command className="tw-:[&_[cmdk-group-heading]]:text-muted-foreground tw-:**:data-[slot=command-input-wrapper]:h-12 tw-:[&_[cmdk-group-heading]]:px-2 tw-:[&_[cmdk-group-heading]]:font-medium tw-:[&_[cmdk-group]]:px-2 tw-:[&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 tw-:[&_[cmdk-input-wrapper]_svg]:h-5 tw-:[&_[cmdk-input-wrapper]_svg]:w-5 tw-:[&_[cmdk-input]]:h-12 tw-:[&_[cmdk-item]]:px-2 tw-:[&_[cmdk-item]]:py-3 tw-:[&_[cmdk-item]_svg]:h-5 tw-:[&_[cmdk-item]_svg]:w-5">
           {children}
         </Command>
       </DialogContent>
@@ -54,14 +52,12 @@ function CommandDialog({
   );
 }
 
-function CommandInput({
-  className,
-  ...props
-}) {
+function CommandInput({ className, ...props }) {
   return (
     <div
       data-slot="command-input-wrapper"
-      className="tw-:flex tw-:h-9 tw-:items-center tw-:gap-2 tw-:border-b tw-:px-3">
+      className="tw-:flex tw-:h-9 tw-:items-center tw-:gap-2 tw-:border-b tw-:px-3"
+    >
       <SearchIcon className="tw-:size-4 tw-:shrink-0 tw-:opacity-50" />
       <CommandPrimitive.Input
         data-slot="command-input"
@@ -69,15 +65,13 @@ function CommandInput({
           "tw-:placeholder:text-muted-foreground tw-:flex tw-:h-10 tw-:w-full tw-:rounded-md tw-:bg-transparent tw-:py-3 tw-:text-sm tw-:outline-hidden tw-:disabled:cursor-not-allowed tw-:disabled:opacity-50",
           className
         )}
-        {...props} />
+        {...props}
+      />
     </div>
   );
 }
 
-function CommandList({
-  className,
-  ...props
-}) {
+function CommandList({ className, ...props }) {
   return (
     <CommandPrimitive.List
       data-slot="command-list"
@@ -85,25 +79,22 @@ function CommandList({
         "tw-:max-h-[300px] tw-:scroll-py-1 tw-:overflow-x-hidden tw-:overflow-y-auto",
         className
       )}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-function CommandEmpty({
-  ...props
-}) {
+function CommandEmpty({ ...props }) {
   return (
     <CommandPrimitive.Empty
       data-slot="command-empty"
       className="tw-:py-6 tw-:text-center tw-:text-sm"
-      {...props} />
+      {...props}
+    />
   );
 }
 
-function CommandGroup({
-  className,
-  ...props
-}) {
+function CommandGroup({ className, ...props }) {
   return (
     <CommandPrimitive.Group
       data-slot="command-group"
@@ -111,26 +102,22 @@ function CommandGroup({
         "tw-:text-foreground tw-:[&_[cmdk-group-heading]]:text-muted-foreground tw-:overflow-hidden tw-:p-1 tw-:[&_[cmdk-group-heading]]:px-2 tw-:[&_[cmdk-group-heading]]:py-1.5 tw-:[&_[cmdk-group-heading]]:text-xs tw-:[&_[cmdk-group-heading]]:font-medium",
         className
       )}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-function CommandSeparator({
-  className,
-  ...props
-}) {
+function CommandSeparator({ className, ...props }) {
   return (
     <CommandPrimitive.Separator
       data-slot="command-separator"
       className={cn("tw-:bg-border tw-:-mx-1 tw-:h-px", className)}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-function CommandItem({
-  className,
-  ...props
-}) {
+function CommandItem({ className, ...props }) {
   return (
     <CommandPrimitive.Item
       data-slot="command-item"
@@ -138,14 +125,12 @@ function CommandItem({
         "tw-:data-[selected=true]:bg-accent tw-:data-[selected=true]:text-accent-foreground tw-:[&_svg:not([class*=text-])]:text-muted-foreground tw-:relative tw-:flex tw-:cursor-default tw-:items-center tw-:gap-2 tw-:rounded-sm tw-:px-2 tw-:py-1.5 tw-:text-sm tw-:outline-hidden tw-:select-none tw-:data-[disabled=true]:pointer-events-none tw-:data-[disabled=true]:opacity-50 tw-:[&_svg]:pointer-events-none tw-:[&_svg]:shrink-0 tw-:[&_svg:not([class*=size-])]:size-4",
         className
       )}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-function CommandShortcut({
-  className,
-  ...props
-}) {
+function CommandShortcut({ className, ...props }) {
   return (
     <span
       data-slot="command-shortcut"
@@ -153,7 +138,8 @@ function CommandShortcut({
         "tw-:text-muted-foreground tw-:ml-auto tw-:text-xs tw-:tracking-widest",
         className
       )}
-      {...props} />
+      {...props}
+    />
   );
 }
 
@@ -167,4 +153,4 @@ export {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
-}
+};

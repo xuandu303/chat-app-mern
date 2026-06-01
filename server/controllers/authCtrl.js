@@ -15,14 +15,10 @@ export const signup = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+      return res.status(400).json({ message: "Email and password are required" });
     }
     if (password.length < 6) {
-      return res
-        .status(400)
-        .json({ message: "Password must be at least 6 characters" });
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
     const user = await User.create({ email, password });
     res.cookie("jwt", createToken(user.email, user.id), {
@@ -51,9 +47,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+      return res.status(400).json({ message: "Email and password are required" });
     }
     const user = await User.findOne({ email });
     if (!user) {
@@ -112,9 +106,7 @@ export const updateProfile = async (req, res) => {
     const { userId } = req;
     const { firstName, lastName, color } = req.body;
     if (!firstName || !lastName) {
-      return res
-        .status(404)
-        .json({ message: "First name, last name, and color are required." });
+      return res.status(404).json({ message: "First name, last name, and color are required." });
     }
 
     const userData = await User.findByIdAndUpdate(
@@ -125,7 +117,7 @@ export const updateProfile = async (req, res) => {
         color,
         profileSetup: true,
       },
-      { new: true, runValidators: true },
+      { new: true, runValidators: true }
     );
 
     return res.status(200).json({
@@ -157,7 +149,7 @@ export const addProfileImage = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       req.userId,
       { image: req.file.path, imagePublicId: req.file.filename },
-      { new: true, runValidators: true },
+      { new: true, runValidators: true }
     );
 
     return res.status(200).json({
@@ -184,9 +176,7 @@ export const removeProfileImage = async (req, res) => {
 
     await User.findByIdAndUpdate(userId, { image: null, imagePublicId: null });
 
-    return res
-      .status(200)
-      .json({ message: "Profile image removed successfully" });
+    return res.status(200).json({ message: "Profile image removed successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

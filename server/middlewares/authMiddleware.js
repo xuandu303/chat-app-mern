@@ -2,9 +2,7 @@ import jwt from "jsonwebtoken";
 
 const verifyJwt = (token) =>
   new Promise((resolve, reject) =>
-    jwt.verify(token, process.env.JWT_KEY, (err, decoded) =>
-      err ? reject(err) : resolve(decoded),
-    ),
+    jwt.verify(token, process.env.JWT_KEY, (err, decoded) => (err ? reject(err) : resolve(decoded)))
   );
 
 export const verifyToken = async (req, res, next) => {
@@ -24,7 +22,7 @@ const parseCookies = (cookieHeader = "") =>
     cookieHeader.split(";").map((c) => {
       const [k, ...v] = c.trim().split("=");
       return [k, v.join("=")];
-    }),
+    })
   );
 
 export const verifySocketToken = async (socket, next) => {

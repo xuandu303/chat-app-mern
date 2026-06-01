@@ -34,7 +34,7 @@ const channelSchema = new mongoose.Schema({
   },
 });
 
-channelSchema.pre("save", function (next) {
+channelSchema.pre("save", function (_next) {
   this.updatedAt = Date.now();
 });
 

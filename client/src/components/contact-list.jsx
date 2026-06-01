@@ -64,12 +64,14 @@ const ContactList = ({ contacts, isChannel = false }) => {
               </div>
             )}
             <div className="flex flex-col items-start justify-center gap-0">
-              <span className={`font-semibold ${unreadContacts.includes(contact._id) ? "text-white font-semibold" : ""}`}>
-                {isChannel
-                  ? `${contact.name}`
-                  : `${contact.firstName} ${contact.lastName}`}
+              <span
+                className={`font-semibold ${unreadContacts.includes(contact._id) ? "text-white font-semibold" : ""}`}
+              >
+                {isChannel ? `${contact.name}` : `${contact.firstName} ${contact.lastName}`}
               </span>
-              <div className={`flex items-center justify-start gap-0.5 text-sm ${unreadContacts.includes(contact._id) ? "text-white font-semibold" : "text-white/40"}`}>
+              <div
+                className={`flex items-center justify-start gap-0.5 text-sm ${unreadContacts.includes(contact._id) ? "text-white font-semibold" : "text-white/40"}`}
+              >
                 <span className="truncate max-w-40">
                   {!isChannel &&
                     contact.lastMessageSenderId &&
@@ -92,9 +94,7 @@ const ContactList = ({ contacts, isChannel = false }) => {
                         : `${contact.lastMessageSender.firstName} sent an attachment`)}
                 </span>
                 <span>·</span>
-                <span>
-                  {formatLastMessageTime(contact.lastMessageTime)}
-                </span>
+                <span>{formatLastMessageTime(contact.lastMessageTime)}</span>
               </div>
             </div>
           </div>

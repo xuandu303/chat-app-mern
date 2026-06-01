@@ -17,9 +17,7 @@ export const createChannel = async (req, res) => {
     });
 
     if (validMembers.length !== members.length) {
-      return res
-        .status(400)
-        .json({ message: "Some members are not valid users." });
+      return res.status(400).json({ message: "Some members are not valid users." });
     }
 
     const newChannel = await Channel.create({

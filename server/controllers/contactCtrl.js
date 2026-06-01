@@ -10,10 +10,7 @@ export const searchContacts = async (req, res) => {
       return res.status(400).json("searchTerm is required");
     }
 
-    const sanitizedSearchTerm = searchTerm.replace(
-      /[.*+?^${}()|[\]\\]/g,
-      "\\$&",
-    );
+    const sanitizedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
     const regex = new RegExp(sanitizedSearchTerm, "i");
 
@@ -99,10 +96,7 @@ export const getContactsForDMList = async (req, res) => {
 
 export const getAllContacts = async (req, res) => {
   try {
-    const users = await User.find(
-      { _id: { $ne: req.userId } },
-      "firstName lastName _id email",
-    );
+    const users = await User.find({ _id: { $ne: req.userId } }, "firstName lastName _id email");
 
     const contacts = users.map((user) => ({
       label: user.firstName ? `${user.firstName} ${user.lastName}` : user.email,

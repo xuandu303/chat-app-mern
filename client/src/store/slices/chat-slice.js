@@ -27,11 +27,9 @@ export const createChatSlice = (set, get) => ({
 
   setSelectedChatData: (selectedChatData) => set({ selectedChatData }),
 
-  setSelectedChatMessages: (selectedChatMessages) =>
-    set({ selectedChatMessages }),
+  setSelectedChatMessages: (selectedChatMessages) => set({ selectedChatMessages }),
 
-  setDirectMessagesContacts: (directMessagesContacts) =>
-    set({ directMessagesContacts }),
+  setDirectMessagesContacts: (directMessagesContacts) => set({ directMessagesContacts }),
 
   addChannel: (channel) => {
     const channels = get().channels;
@@ -54,14 +52,8 @@ export const createChatSlice = (set, get) => ({
         ...selectedChatMessages,
         {
           ...message,
-          recipient:
-            selectedChatType === "channel"
-              ? message.recipient
-              : message.recipient._id,
-          sender:
-            selectedChatType === "channel"
-              ? message.sender
-              : message.sender._id,
+          recipient: selectedChatType === "channel" ? message.recipient : message.recipient._id,
+          sender: selectedChatType === "channel" ? message.sender : message.sender._id,
         },
       ],
     });
@@ -71,14 +63,10 @@ export const createChatSlice = (set, get) => ({
     const { directMessagesContacts, userInfo } = get();
 
     const contactId =
-      message.sender._id === userInfo.id
-        ? message.recipient._id
-        : message.sender._id;
+      message.sender._id === userInfo.id ? message.recipient._id : message.sender._id;
 
     let updatedContacts;
-    const existingContact = directMessagesContacts.find(
-      (c) => c._id === contactId,
-    );
+    const existingContact = directMessagesContacts.find((c) => c._id === contactId);
     if (existingContact) {
       updatedContacts = directMessagesContacts.map((c) =>
         c._id === contactId
@@ -89,11 +77,10 @@ export const createChatSlice = (set, get) => ({
               lastMessageType: message.messageType,
               lastMessageSenderId: message.sender._id,
             }
-          : c,
+          : c
       );
     } else {
-      const newContact =
-        message.sender._id === userInfo.id ? message.recipient : message.sender;
+      const newContact = message.sender._id === userInfo.id ? message.recipient : message.sender;
 
       updatedContacts = [
         {
@@ -107,8 +94,7 @@ export const createChatSlice = (set, get) => ({
       ];
     }
     updatedContacts.sort(
-      (a, b) =>
-        new Date(b.lastMessageTime || 0) - new Date(a.lastMessageTime || 0),
+      (a, b) => new Date(b.lastMessageTime || 0) - new Date(a.lastMessageTime || 0)
     );
 
     set({ directMessagesContacts: updatedContacts });
@@ -116,13 +102,19 @@ export const createChatSlice = (set, get) => ({
 
   addChannelInChannelList: (message) => {
     const channels = get().channels;
-    const data = channels.find((channel) => channel._id === message.channelId);
-    const index = channels.findIndex(
-      (channel) => channel._id === message.channelId,
-    );
-    if (index !== -1 && index !== undefined) {
-      channels.splice(index, 1);
-      channels.unshift(data);
-    }
+    const index = channels.findIndex((c) => c._id === message.channelId);
+    if (index === -1) return;
+
+    const updated = {
+      ...channels[index],
+      lastMessage: message.content,
+      lastMessageTime: message.timestamp,
+      lastMessageType: message.messageType,
+      lastMessageSender: message.sender,
+    };
+
+    set({
+      channels: [updated, ...channels.filter((_, i) => i !== index)],
+    });
   },
 });

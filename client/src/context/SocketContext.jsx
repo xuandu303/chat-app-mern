@@ -62,13 +62,13 @@ export const SocketProvider = ({ children }) => {
         addMessage,
         addChannelInChannelList,
         markAsUnread,
+        userInfo,
       } = useAppStore.getState();
       const isCurrentChat =
-        selectedChatType !== undefined &&
-        selectedChatData._id === message.channelId;
+        selectedChatType !== undefined && selectedChatData._id === message.channelId;
       if (isCurrentChat) {
         addMessage(message);
-      } else {
+      } else if (message.sender._id !== userInfo.id) {
         markAsUnread(message.channelId);
       }
       addChannelInChannelList(message);
@@ -85,7 +85,5 @@ export const SocketProvider = ({ children }) => {
     };
   }, [userInfo]);
 
-  return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
-  );
+  return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
 };

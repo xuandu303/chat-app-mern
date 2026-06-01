@@ -15,19 +15,19 @@ A full-stack real-time chat application supporting direct messages and group cha
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 19, Vite, React Router v7 |
-| UI | Tailwind CSS v4, Radix UI, Lucide, shadcn/ui |
-| State | Zustand |
-| Real-time | Socket.IO client |
-| HTTP | Axios |
-| Backend | Node.js, Express v5 |
-| Database | MongoDB, Mongoose |
-| Real-time | Socket.IO server |
-| Auth | JWT, bcrypt |
-| File storage | Cloudinary, Multer |
-| Dev tooling | Nodemon, Concurrently, ESLint |
+| Layer        | Technology                                   |
+| ------------ | -------------------------------------------- |
+| Frontend     | React 19, Vite, React Router v7              |
+| UI           | Tailwind CSS v4, Radix UI, Lucide, shadcn/ui |
+| State        | Zustand                                      |
+| Real-time    | Socket.IO client                             |
+| HTTP         | Axios                                        |
+| Backend      | Node.js, Express v5                          |
+| Database     | MongoDB, Mongoose                            |
+| Real-time    | Socket.IO server                             |
+| Auth         | JWT, bcrypt                                  |
+| File storage | Cloudinary, Multer                           |
+| Dev tooling  | Nodemon, Concurrently, ESLint                |
 
 ## Getting Started
 
@@ -50,6 +50,7 @@ npm install --prefix client
 ### Environment variables
 
 **server/.env**
+
 ```env
 PORT=3001
 DATABASE_URL=mongodb://localhost:27017/chat-app
@@ -62,6 +63,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 ```
 
 **client/.env**
+
 ```env
 VITE_SERVER_URL=http://localhost:3001
 ```
@@ -101,12 +103,12 @@ chat-app-mern/
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` (root) | Start server + client concurrently |
-| `npm run dev --prefix server` | Start Express server only |
-| `npm run dev --prefix client` | Start Vite dev server only |
-| `npm run build --prefix client` | Build client for production |
+| Command                         | Description                        |
+| ------------------------------- | ---------------------------------- |
+| `npm run dev` (root)            | Start server + client concurrently |
+| `npm run dev --prefix server`   | Start Express server only          |
+| `npm run dev --prefix client`   | Start Vite dev server only         |
+| `npm run build --prefix client` | Build client for production        |
 
 ## Real-time Communication
 

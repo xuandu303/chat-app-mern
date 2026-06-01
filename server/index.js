@@ -11,15 +11,14 @@ import setupSocket from "./socket.js";
 
 const app = express();
 const port = process.env.PORT || 3001;
-const databaseURL =
-  process.env.DATABASE_URL || "mongodb://localhost:27017/chat-app";
+const databaseURL = process.env.DATABASE_URL || "mongodb://localhost:27017/chat-app";
 
 app.use(
   cors({
     origin: process.env.ORIGIN,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
-  }),
+  })
 );
 
 app.use(express.json());

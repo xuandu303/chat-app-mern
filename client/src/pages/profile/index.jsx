@@ -20,9 +20,7 @@ const Profile = () => {
   const { userInfo, setUserInfo } = useAppStore();
   const [firstName, setFirstName] = useState(userInfo?.firstName ?? "");
   const [lastName, setLastName] = useState(userInfo?.lastName ?? "");
-  const [image, setImage] = useState(
-    userInfo?.image ? resolveUrl(userInfo.image) : null
-  );
+  const [image, setImage] = useState(userInfo?.image ? resolveUrl(userInfo.image) : null);
   const [hovered, setHovered] = useState(false);
   const [selectedColor, setSelectedColor] = useState(userInfo?.color ?? 0);
   const fileInputRef = useRef(null);
@@ -144,9 +142,7 @@ const Profile = () => {
                     selectedColor
                   )}`}
                 >
-                  {firstName
-                    ? firstName.split("").shift()
-                    : userInfo.email.split("").shift()}
+                  {firstName ? firstName.split("").shift() : userInfo.email.split("").shift()}
                 </div>
               )}
             </Avatar>

@@ -1,9 +1,4 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import {
@@ -15,10 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import apiClient from "@/lib/api-client";
-import {
-  CREATE_CHANNEL_ROUTE,
-  GET_ALL_CONTACTS_ROUTES,
-} from "@/utils/constants";
+import { CREATE_CHANNEL_ROUTE, GET_ALL_CONTACTS_ROUTES } from "@/utils/constants";
 import { useAppStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import MultipleSelector from "@/components/ui/multiple-selector";
@@ -50,7 +42,7 @@ const CreateChannel = () => {
           },
           {
             withCredentials: true,
-          },
+          }
         );
         if (response.status === 201) {
           setChannelName("");
@@ -82,9 +74,7 @@ const CreateChannel = () => {
       <Dialog open={newChannelModal} onOpenChange={setNewChannelModal}>
         <DialogContent className="bg-[#181920] border-none text-white w-100 h-100 flex flex-col gap-5">
           <DialogHeader>
-            <DialogTitle>
-              Please fill up the details for new channel
-            </DialogTitle>
+            <DialogTitle>Please fill up the details for new channel</DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
           <div>
@@ -104,9 +94,7 @@ const CreateChannel = () => {
               value={selectedContacts}
               onChange={setSelectedContacts}
               emptyIndicator={
-                <p className="text-center text-lg leading-10 text-gray-600">
-                  No results found.
-                </p>
+                <p className="text-center text-lg leading-10 text-gray-600">No results found.</p>
               }
             />
           </div>
