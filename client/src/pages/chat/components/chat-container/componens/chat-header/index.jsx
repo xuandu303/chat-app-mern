@@ -1,10 +1,18 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useAppStore } from "@/store";
 import { IoClose } from "react-icons/io5";
+import { BsImages } from "react-icons/bs";
 import { getColor, resolveUrl } from "@/lib/utils";
 
 const ChatHeader = () => {
-  const { closeChat, selectedChatData, selectedChatType, onlineUsers } = useAppStore();
+  const {
+    closeChat,
+    selectedChatData,
+    selectedChatType,
+    onlineUsers,
+    showMediaPanel,
+    toggleMediaPanel,
+  } = useAppStore();
   const isOnline = selectedChatType === "contact" && onlineUsers.includes(selectedChatData._id);
   return (
     <div className="h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-8">
@@ -52,6 +60,13 @@ const ChatHeader = () => {
           </div>
         </div>
         <div className="flex gap-5 items-center justify-center">
+          <button
+            className={`focus:border-none cursor-pointer focus:outline-none duration-300 transition-all ${showMediaPanel ? "text-white" : "text-neutral-500 hover:text-white"}`}
+            onClick={toggleMediaPanel}
+            title="Ảnh & Video"
+          >
+            <BsImages className="text-xl" />
+          </button>
           <button
             className="text-neutral-500 focus:border-none cursor-pointer focus:outline-none focus:text-white duration-300 transition-all"
             onClick={closeChat}

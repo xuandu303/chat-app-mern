@@ -6,8 +6,11 @@ export const createChatSlice = (set, get) => ({
   channels: [],
   onlineUsers: [],
   unreadContacts: [],
+  showMediaPanel: false,
 
   setOnlineUsers: (onlineUsers) => set({ onlineUsers }),
+
+  toggleMediaPanel: () => set((state) => ({ showMediaPanel: !state.showMediaPanel })),
 
   markAsUnread: (id) => {
     const { unreadContacts } = get();
@@ -41,6 +44,7 @@ export const createChatSlice = (set, get) => ({
       selectedChatType: undefined,
       selectedChatData: undefined,
       selectedChatMessages: [],
+      showMediaPanel: false,
     }),
 
   addMessage: (message) => {

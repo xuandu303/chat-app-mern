@@ -63,6 +63,12 @@ export const resolveUrl = (url) => {
   return `${HOST}/${url}`;
 };
 
+export const checkIfImage = (filePath) => {
+  if (!filePath) return false;
+  if (filePath.includes("/image/upload/")) return true;
+  return /\.(jpeg|jpg|gif|png|bmp|tiff|tif|svg|webp|ico|heic|heif)(\?.*)?$/i.test(filePath);
+};
+
 export function formatFileSize(bytes) {
   if (bytes === 0) return "0 B";
 

@@ -4,7 +4,7 @@ import { GET_ALL_MESSAGES_ROUTES, GET_CHANNEL_MESSAGES } from "@/utils/constants
 import moment from "moment";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { HiDocumentText } from "react-icons/hi2";
-import { formatFileSize, formatLastMessageTime, resolveUrl } from "@/lib/utils";
+import { checkIfImage, formatFileSize, formatLastMessageTime, resolveUrl } from "@/lib/utils";
 import { IoMdArrowRoundDown } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
@@ -72,14 +72,6 @@ const MessageContainer = () => {
       el.scrollTop = el.scrollHeight;
     }, 50);
   }, [selectedChatMessages.length]);
-
-  const checkIfImage = (filePath) => {
-    if (!filePath) return false;
-    // Cloudinary image URLs contain /image/upload/ in the path
-    if (filePath.includes("/image/upload/")) return true;
-    const imageRegex = /\.(jpeg|jpg|gif|png|bmp|tiff|tif|svg|webp|ico|heic|heif)(\?.*)?$/i;
-    return imageRegex.test(filePath);
-  };
 
   const renderMessages = () => {
     let lastDate = null;
