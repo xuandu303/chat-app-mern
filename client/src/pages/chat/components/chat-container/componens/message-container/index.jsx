@@ -192,6 +192,9 @@ const MessageContainer = () => {
                   </div>
                 </div>
               )}
+              {message.content && (
+                <div className="px-3 py-2 text-sm leading-snug">{message.content}</div>
+              )}
             </div>
           )}
         </HoverCardTrigger>
@@ -309,6 +312,9 @@ const MessageContainer = () => {
                           </span>
                         </div>
                       </div>
+                    )}
+                    {message.content && (
+                      <div className="px-3 py-2 text-sm leading-snug">{message.content}</div>
                     )}
                   </div>
                 )}

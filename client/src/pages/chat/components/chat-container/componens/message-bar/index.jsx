@@ -96,6 +96,7 @@ const MessageBar = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (response.status === 200 && response.data) {
+        const caption = message.trim() || null;
         const filePayload = {
           url: response.data.filePath,
           name: response.data.fileName,
@@ -104,7 +105,7 @@ const MessageBar = () => {
         if (selectedChatType === "contact" && socket.connected) {
           socket.emit("sendMessage", {
             sender: userInfo.id,
-            content: null,
+            content: caption,
             recipient: selectedChatData._id,
             messageType: "file",
             file: filePayload,
@@ -112,13 +113,15 @@ const MessageBar = () => {
         } else if (selectedChatType === "channel" && socket.connected) {
           socket.emit("sendChannelMessage", {
             sender: userInfo.id,
-            content: null,
+            content: caption,
             messageType: "file",
             file: filePayload,
             channelId: selectedChatData._id,
           });
         }
         clearPendingFile();
+        setMessage("");
+        setEmojiPickerOpen(false);
       }
     } catch (error) {
       console.error(error);
@@ -190,7 +193,6 @@ const MessageBar = () => {
                 handleSendMessage();
               }
             }}
-            disabled={!!pendingFile}
           />
           <button
             className="text-neutral-500 focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
